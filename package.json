@@ -1,0 +1,36 @@
+{
+  "name": "localllm",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "lint": "eslint .",
+    "lint:autofix": "eslint . --fix",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/baluvijay/localLLM.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/baluvijay/localLLM/issues"
+  },
+  "homepage": "https://github.com/baluvijay/localLLM#readme",
+  "dependencies": {
+    "@xenova/transformers": "^2.17.2",
+    "axios": "^1.8.2",
+    "chromadb": "^1.10.5",
+    "dotenv": "^16.4.7",
+    "fs-extra": "^11.3.0",
+    "glob": "^11.0.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.22.0",
+    "eslint": "^9.22.0",
+    "globals": "^16.0.0"
+  }
+}
