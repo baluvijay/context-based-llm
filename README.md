@@ -1,5 +1,6 @@
-# **Context Based LocalLLM** 🚀  
+# **Context Based LocalLLM** 
 A **local-first** implementation of LLM-based code analysis using **ChromaDB** and **Ollama**. This project allows you to index your codebase and query it efficiently using a locally running LLM model.  
+It effectively kills the privacy concerns we all face when passing sensitive information  to a third party LLM server.Since everything is run in your local , you can freely use the power of LLM to navigate through your sensitive data as well.
 
 ## **Features** ✨  
 ✅ **Local codebase indexing** using ChromaDB  
