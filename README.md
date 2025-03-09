@@ -28,7 +28,7 @@ OLLAMA_API='http://localhost:11434/api/generate' # Ollama API endpoint
 FILE_FORMATS='{js,ts,jsx,tsx,pdf}'  # File types to process
 ```
 
-### **4️⃣ NPM Command **
+### **4️⃣ NPM Command**
 Use node version 20.10.0, and then to install all the packages run the command 
 ```sh
 npm install -g npm@20.10.0 # if not installed
