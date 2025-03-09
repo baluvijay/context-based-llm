@@ -13,9 +13,52 @@ const CODE_DIR = process.env.DIRECTORY_PATH;
 const FILE_FORMATS = process.env.FILE_FORMATS || '{js,ts,jsx,tsx,pdf}';
 const CHUNK_SIZE = 1500; // Characters per chunk
 const CHUNK_OVERLAP = 500; // Character overlap between chunks
-const VECTOR_DB_MODEL = 'Xenova/all-MiniLM-L6-v2';
+const VECTOR_DB_MODEL = process.env.VECTOR_DB_MODEL ||'Xenova/all-MiniLM-L6-v2';
 
-console.log(CODE_DIR);
+
+/**
+ * Creates embedding function using the specified model
+ * @returns {Object} The embedding function
+ */
+async function createEmbeddingFunction() {
+    const embedder = await pipeline('feature-extraction', VECTOR_DB_MODEL);
+    return {
+        generate: async (texts) => {
+            const embeddings = [];
+            for (const text of texts) {
+                const output = await embedder(text, { pooling: 'mean', normalize: true });
+                embeddings.push(Array.from(output.data));
+            }
+            return embeddings;
+        }
+    };
+}
+
+/**
+ * Gets or creates a Chroma collection
+ * @returns {Object} The Chroma collection
+ */
+async function getChromaCollection() {
+    const client = new ChromaClient();
+    const embeddingFunction = await createEmbeddingFunction();
+    
+    let collection;
+    try {
+        collection = await client.getCollection({
+            name: COLLECTION_NAME, 
+            embeddingFunction: embeddingFunction
+        });
+        console.log('Using existing collection');
+    } catch (e) {
+        collection = await client.createCollection({
+            name: COLLECTION_NAME, 
+            embeddingFunction: embeddingFunction
+        });
+        console.log('Created new collection');
+    }
+    
+    return collection;
+}
 
 /**
  * Splits text into overlapping chunks
@@ -29,9 +72,9 @@ function chunkText(text, chunkSize, overlap) {
     let index = 0;
     
     while (index < text.length) {
-      const chunk = text.substring(index, index + chunkSize);
-      chunks.push(chunk);
-      index += (chunkSize - overlap);
+        const chunk = text.substring(index, index + chunkSize);
+        chunks.push(chunk);
+        index += (chunkSize - overlap);
     }
     
     return chunks;
@@ -41,37 +84,8 @@ function chunkText(text, chunkSize, overlap) {
  * Processes directory of code files and stores in vector database
  */
 async function dirToVector() {
-    const client = new ChromaClient();
     console.log('Setting up the chroma collection');
-    
-    // Initialize embedding model
-    const embedder = await pipeline('feature-extraction', VECTOR_DB_MODEL);
-    const embeddingFunction = {
-      generate: async (texts) => {
-        const embeddings = [];
-        for (const text of texts) {
-          const output = await embedder(text, { pooling: 'mean', normalize: true });
-          embeddings.push(Array.from(output.data));
-        }
-        return embeddings;
-      }
-    };
-    
-    // Get or create collection
-    let collection;
-    try {
-        collection = await client.getCollection({
-          name: COLLECTION_NAME, 
-          embeddingFunction: embeddingFunction
-        });
-        console.log('Using existing collection');
-    } catch (e) {
-        collection = await client.createCollection({
-          name: COLLECTION_NAME, 
-          embeddingFunction: embeddingFunction
-        });
-        console.log('Created new collection');
-    }
+    const collection = await getChromaCollection();
     
     console.log('Finding files..');
     const files = glob.sync(`${CODE_DIR}/**/*.${FILE_FORMATS}`);
@@ -95,17 +109,17 @@ async function dirToVector() {
                 await collection.add({
                     ids: [chunkId],
                     metadatas: [{ 
-                      text: chunks[i], 
-                      file: relativePath, 
-                      chunkIndex: i, 
-                      totalChunks: chunks.length,
-                      language: path.extname(file).substring(1)
+                        text: chunks[i], 
+                        file: relativePath, 
+                        chunkIndex: i, 
+                        totalChunks: chunks.length,
+                        language: path.extname(file).substring(1)
                     }],
                     documents: [chunks[i]]
                 });
             }
             
-            console.log(`Processed file No ${counter} , filename:  ${file}`);
+            console.log(`Processed file No ${counter}, filename: ${file}`);
             counter = counter + 1;
         }
         catch (e) {
@@ -119,30 +133,13 @@ async function dirToVector() {
  * Creates a prompt for querying the codebase with an LLM
  * @param {string} query - The search query
  * @param {number} maxResults - Maximum number of results to include
- * @returns {string} Formatted prompt with context
+ * @returns {Object} Formatted prompt with context and source files
  */
 async function createPrompt(query, maxResults = 5) {
     console.log(`Searching codebase for: "${query}"`);
   
-    // Step 1: Retrieve relevant code chunks
-    const client = new ChromaClient();
-    const embedder = await pipeline('feature-extraction', VECTOR_DB_MODEL);
-    
-    const embeddingFunction = {
-        generate: async (texts) => {
-            const embeddings = [];
-            for (const text of texts) {
-                const output = await embedder(text, { pooling: 'mean', normalize: true });
-                embeddings.push(Array.from(output.data));
-            }
-            return embeddings;
-        }
-    };
-    
-    const collection = await client.getCollection({
-        name: COLLECTION_NAME, 
-        embeddingFunction: embeddingFunction
-    });
+    // Retrieve relevant code chunks
+    const collection = await getChromaCollection();
     
     // Query the collection
     const results = await collection.query({
@@ -150,7 +147,7 @@ async function createPrompt(query, maxResults = 5) {
         nResults: maxResults,
     });
     
-    // Step 2: Format the context for the LLM
+    // Format the context for the LLM
     let context = '';
     const metadatas = results.metadatas[0] || [];
     const documents = results.documents[0] || [];
@@ -162,19 +159,16 @@ async function createPrompt(query, maxResults = 5) {
         context += `\n--- Code from ${metadata.file} ---\n${document}\n`;
     }
     
-    // Step 3: Create a prompt for the LLM
-    const prompt = `You are a helpful assistant analyzing a codebase. 
-Below are relevant code snippets from the codebase related to the query: "${query}"
-
-${context}
-
-Based on these code snippets, please answer the following query:
-${query}
-
-Provide a comprehensive response, focusing on the specific code shown above. 
-If code examples would help, include them.`;
-
-    return {prompt,sourceFiles:metadatas.map(m => m.file)};
+    // Create a prompt for the LLM
+    const prompt = `You are a helpful assistant analyzing a set of files. 
+  the relevant parts which are related to the query "${query} is ${context}
+  Based on these context provided, please answer the following query:${query}
+  Provide a comprehensive response focused ont the context too`;
+  
+    return {
+        prompt,
+        sourceFiles: metadatas.map(m => m.file)
+    };
 }
 
 export { dirToVector, createPrompt };
