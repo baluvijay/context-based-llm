@@ -36,7 +36,7 @@ nvm use 20.10.0 # to switch the versions
 npm install
 ```
 
-### **5️⃣ Start the Application **
+### **5️⃣ Start the Application**
 To start the application got to the root and run the command
 ```sh
 node index.js
