@@ -105,7 +105,7 @@ async function dirToVector() {
                 });
             }
             
-            console.log(`Processed file ${counter}`);
+            console.log(`Processed file No ${counter} , filename:  ${file}`);
             counter = counter + 1;
         }
         catch (e) {
