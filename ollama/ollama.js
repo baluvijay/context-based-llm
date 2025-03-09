@@ -18,8 +18,6 @@ async function queryOllama(prompt) {
             prompt: prompt,
             stream: false
         });
-
-        console.log('✅ Ollama Response:', response.data);
         return response.data;
     } catch (error) {
         console.error('❌ Error querying Ollama:', error.message);
