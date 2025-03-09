@@ -21,12 +21,13 @@ docker run -p 8000:8000 ghcr.io/chroma-core/chroma:latest
 You can follow this guide to set up ollama and run a local LLM : https://medium.com/@baluvijayakumar98/llms-on-your-local-machine-using-ollama-e6a011f8b158
 
 ### **3️⃣ Configure Environment Variables**
-Create a .env file in the root directory and set the following variables 
+Create a .env file in the root directory and set the following variables,
+Copy the folder with all the files you want to add as a context into the data folder.
 ```sh
-DIRECTORY_PATH='./<your-folder>'  # Folder containing files to be processed
+DIRECTORY_PATH='./data'  # Folder containing files to be processed
 OLLAMA_MODEL='deepseek-coder:6.7b' # Change this to your preferred model
 OLLAMA_API='http://localhost:11434/api/generate' # Ollama API endpoint
-FILE_FORMATS='{js,ts,jsx,tsx,pdf}'  # File types to process
+FILE_FORMATS='{js,ts,jsx,tsx,pdf,csv}'  # File types to process
 ```
 
 ### **4️⃣ NPM Command**
