@@ -9,8 +9,6 @@ async function executePrompt(userQuery) {
         
         console.log('🤖 [INFO] Querying Ollama...');
         const response = await queryOllama(prompt);
-
-        console.log('💡 [RESULT] Ollama Response:', response);
         return {response,sourceFiles};
     } catch (error) {
         console.error('❌ [ERROR] Execution failed:', error);
