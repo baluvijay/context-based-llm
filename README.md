@@ -6,8 +6,8 @@ One of the major benefits of this approach is the assurance of privacy. When usi
 This solution allows you to take full advantage of advanced AI capabilities to search, explore, and understand your files—whether they’re documents, spreadsheets, or any other type of data—while keeping your information completely under your control. You can easily navigate through large collections of files or find specific details, all while maintaining your privacy and security.
 
 ## **Features** ✨  
-✅ **Local codebase indexing** using ChromaDB  
-✅ **Query your codebase** using a powerful LLM model  
+✅ **Local indexing** of the provided files using ChromaDB  
+✅ **Ask questionse** regarding the provided files using a powerful LLM model  
 ✅ **No cloud dependency** – Runs entirely on your machine  
 ✅ **Customizable** – Configure the LLM model, API endpoint, and file formats  
 
