@@ -26,8 +26,8 @@ You can follow this guide to set up ollama and run a local LLM : https://medium.
 ### **3️⃣ Configure Environment Variables**
 Create a .env file in the root directory and set the following variables,
 Copy the folder with all the files you want to add as a context into the data folder.
-Ollama model deepseek-coder is trained keeping the coding context in mind, feel free to use anyother model
-If your fileformat isnot included , kindly add it to the .env file
+Ollama model deepseek-coder is trained keeping the coding context in mind, feel free to use anyother model.
+If the file you want to parse through doesnt belong to the provided formats feel free to add them to env variable FILE_FORMATS
 ```sh
 DIRECTORY_PATH='./data'  # Folder containing files to be processed
 OLLAMA_MODEL='deepseek-coder:6.7b' # Change this to your preferred model
@@ -36,7 +36,7 @@ FILE_FORMATS='{js,ts,jsx,tsx,pdf,csv}'  # File types to process
 ```
 
 ### **4️⃣ NPM Command**
-Use node version 20.10.0, and then to install all the packages run the command 
+Use node version 20.10.0 for the code to run seamlessly, follow the below commands for the same 
 ```sh
 npm install -g npm@20.10.0 # if not installed
 nvm use 20.10.0 # to switch the versions
@@ -63,8 +63,10 @@ Once the application is running:
 ## **Things to Do** 🛠️  
 
 1. **Create a GUI** for the chat application instead of using the terminal.  
-2. **Optimize vector classification** – Instead of running the entire codebase each time, detect changes and process only the modified files.  
-3. **Experiment with fine-tuning the model** – If the model is static, explore training it with context to recognize coding patterns and architectural styles.  
+2. **Optimize vector classification** – Instead of indexing the entire set of files everytime, try to use a diff checker.  
+3. **Experiment with fine-tuning the model** – If the provided files wont change rapidly,explore training/fine tuning the model with that context to recognize patterns and styles more effectively.
+4. **Add agents support** – Instead of providing the files locally, you can use agent tool to get the data. Probably using LangChain
+     
 
 💡 **Have suggestions or want to contribute?** Feel free to reach out!  
 
