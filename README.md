@@ -27,7 +27,7 @@ You can follow this guide to set up ollama and run a local LLM : https://medium.
 Create a .env file in the root directory and set the following variables,
 Copy the folder with all the files you want to add as a context into the data folder.
 Ollama model deepseek-coder is trained keeping the coding context in mind, feel free to use anyother model.
-If the file you want to parse through doesnt belong to the provided formats feel free to add them to env variable FILE_FORMATS
+If the file format you want to add isnt included , just add the file format into the env variable FILE_FORMATS
 ```sh
 DIRECTORY_PATH='./data'  # Folder containing files to be processed
 OLLAMA_MODEL='deepseek-coder:6.7b' # Change this to your preferred model
