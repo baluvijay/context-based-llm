@@ -66,6 +66,7 @@ Once the application is running:
 2. **Optimize vector classification** – Instead of indexing the entire set of files everytime, try to use a diff checker.  
 3. **Experiment with fine-tuning the model** – If the provided files wont change rapidly,explore training/fine tuning the model with that context to recognize patterns and styles more effectively.
 4. **Add agents support** – Instead of providing the files locally, you can use agent tool to get the data. Probably using LangChain
+5. **Create a bash script** to make the setup smoother
      
 
 💡 **Have suggestions or want to contribute?** Feel free to reach out!  
