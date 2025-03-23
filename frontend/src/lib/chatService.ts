@@ -27,7 +27,7 @@ export async function sendMessageToAPI(content: string, config: ChatConfig): Pro
     }
     
     const data = await response.json();
-    const message= data.response +'\n \n \n ' + 'The source files used for the same are' +data.sourceFiles
+    const message= data.response +'\n \n \n ' + 'The source files used for the same are ' +data.sourceFiles
     return message || '';
   } catch (error) {
     console.error('Error sending message to API:', error);
