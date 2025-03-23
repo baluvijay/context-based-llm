@@ -28,10 +28,8 @@ You can follow this guide to set up ollama and run a local LLM : https://medium.
 If you are using any model other than `deepseek-coder:6.7b` , please change the OLLAMA_MODEL in the .env file in backend folder
 
 ### **3️⃣ Configure Environment Variables**
-Go into the backend folder
-Create a .env file in the root directory and set the following variables, sample env file given
-Ollama model deepseek-coder is trained keeping the coding context in mind, feel free to use anyother model.
-If the file format you want to add isnt included , just add the file format into the env variable FILE_FORMATS
+Go into the backend folder 
+There is a sample env file present, make any modifications if needed.
 ```sh
 DIRECTORY_PATH='../data'  # Folder containing files to be processed
 OLLAMA_MODEL='deepseek-coder:6.7b' # Change this to your preferred model
