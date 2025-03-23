@@ -39,7 +39,8 @@ INTERFACE_MODE="" # api/terminal
 ```
 
 ### **4️⃣ Giving Context for LLM**
-Copy the folder with all the files you want to add as a context into the data folder. You can also mention the path in the DIRECTORY_PATH variable in backend folder env file
+Copy the e files you want to add as a context into the data folder .
+You can also mention the path in the DIRECTORY_PATH variable in .env file
 
 ### **5️⃣ Start the Application**
 To start the application got to the root folder and run the command.
