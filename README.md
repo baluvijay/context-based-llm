@@ -10,6 +10,9 @@ This solution allows you to take full advantage of advanced AI capabilities to s
 ✅ **Ask questionse** regarding the provided files using a powerful LLM model  
 ✅ **No cloud dependency** – Runs entirely on your machine  
 ✅ **Customizable** – Configure the LLM model, API endpoint, and file formats  
+✅ **UI interface** – easy to use front-end UI chat interface
+✅ **Seperation** – both front-end & backend pods can be run seperately .
+
 
 ---
 
@@ -22,11 +25,11 @@ docker run -p 8000:8000 ghcr.io/chroma-core/chroma:latest
 ```
 ### **2️⃣ Run Ollama Locally**
 You can follow this guide to set up ollama and run a local LLM : https://medium.com/@baluvijayakumar98/llms-on-your-local-machine-using-ollama-e6a011f8b158
+If you are using any model other than `deepseek-coder:6.7b` , please change the OLLAMA_MODEL in the .env file in backend folder
 
 ### **3️⃣ Configure Environment Variables**
 Go into the backend folder
 Create a .env file in the root directory and set the following variables, sample env file given
-Copy the folder with all the files you want to add as a context into the data folder.
 Ollama model deepseek-coder is trained keeping the coding context in mind, feel free to use anyother model.
 If the file format you want to add isnt included , just add the file format into the env variable FILE_FORMATS
 ```sh
@@ -37,38 +40,39 @@ FILE_FORMATS='{js,ts,jsx,tsx,pdf,csv,txt}'
 INTERFACE_MODE="" # api/terminal
 ```
 
-### **4️⃣ NPM Command**
-Use node version 20.10.0 for the code to run seamlessly, follow the below commands for the same 
-```sh
-npm install -g npm@20.10.0 # if not installed
-nvm use 20.10.0 # to switch the versions
-npm install
-```
+### **4️⃣ Giving Context for LLM**
+Copy the folder with all the files you want to add as a context into the data folder. You can also mention the path in the DIRECTORY_PATH variable in backend folder env file
 
 ### **5️⃣ Start the Application**
-To start the application got to the root and run the command
-```sh
-node index.js
+To start the application got to the root folder and run the command.
+Make startProject.sh executable by running the command 
 ```
+chmod +x ./startProject.sh
+```
+Execute the project by running the command
+```sh
+./startProject.sh
+```
+You can see the logs in the terminal or in the files created ,called backend.log & frontend.log. If you face any errors you can use these to debug or please raise as an issue.
+
 
 ## **Usage** 🛠️  
 
 Once the application is running:  
 
 1. **Your codebase will be indexed** using **ChromaDB**.  
-2. A **terminal-based query interface** will launch.  
-3. You can ask questions about your codebase
+2. A **frontend chat interface** will be launched.
+3. Go to **http://localhost:8080/** to ask your questions  
 4. The model will return an LLM-generated response along with source file references.
-5.Type "exit" to quit the interface.
+
 
 
 ## **Things to Do** 🛠️  
 
-1. **Create a GUI** for the chat application instead of using the terminal.  
-2. **Optimize vector classification** – Instead of indexing the entire set of files everytime, try to use a diff checker.  
-3. **Experiment with fine-tuning the model** – If the provided files wont change rapidly,explore training/fine tuning the model with that context to recognize patterns and styles more effectively.
-4. **Add agents support** – Instead of providing the files locally, you can use agent tool to get the data. Probably using LangChain
-5. **Create a bash script** to make the setup smoother
+1. **Optimize vector classification** – Instead of indexing the entire set of files everytime, try to use a diff checker.  
+2. **Experiment with fine-tuning the model** – If the provided files wont change rapidly,explore training/fine tuning the model with that context to recognize patterns and styles more effectively.
+3. **Add agents support** – Instead of providing the files locally, you can use agent tool to get the data. Probably using LangChain
+5. **Modify the bash script** to include docker setups as well
      
 
 💡 **Have suggestions or want to contribute?** Feel free to reach out!  
