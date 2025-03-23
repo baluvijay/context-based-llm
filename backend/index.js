@@ -1,6 +1,7 @@
 import { dirToVector, createPrompt } from './vector/vector.js';
 import { queryOllama } from './ollama/ollama.js';
 import express from 'express';
+import cors from 'cors';
 import { createInterface } from 'readline';
 import dotenv from 'dotenv';
 
@@ -29,6 +30,9 @@ async function startApiServer() {
 
     // Middleware to parse JSON bodies
     app.use(express.json());
+    app.use(cors({
+        origin: 'http://localhost:8080'
+      }));
 
     // Health check endpoint
     app.get('/health', (req, res) => {
