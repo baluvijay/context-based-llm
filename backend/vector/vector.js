@@ -1,11 +1,11 @@
 console.log('hello');
 import dotenv from 'dotenv';
-dotenv.config();
 import { ChromaClient } from 'chromadb';
-import path from 'path';  // No need to destructure
-import fs from 'fs-extra'; // No need to destructure
+import path from 'path';  
+import fs from 'fs-extra'; 
 import { pipeline } from '@xenova/transformers';
 import { glob } from 'glob';
+dotenv.config();
 
 // Configuration constants
 const COLLECTION_NAME = 'codebase-vectors';
@@ -89,6 +89,8 @@ async function dirToVector() {
     
     console.log('Finding files..');
     const files = glob.sync(`${CODE_DIR}/**/*.${FILE_FORMATS}`);
+
+    console.log(`Searching for files of format ${FILE_FORMATS} on the path ${CODE_DIR}`);
     console.log(`Found ${files.length} to process`);
 
     let counter = 0;
@@ -163,7 +165,7 @@ async function createPrompt(query, maxResults = 5) {
     const prompt = `You are a helpful assistant analyzing a set of files. 
   the relevant parts which are related to the query "${query} is ${context}
   Based on these context provided, please answer the following query:${query}
-  Provide a comprehensive response focused ont the context too`;
+  Dont guess answers ,you can say no if you dont find anything`;
   
     return {
         prompt,
