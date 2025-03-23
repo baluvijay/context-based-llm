@@ -7,7 +7,7 @@ export interface Message {
 }
 
 export interface ChatConfig {
-  apiEndpoint: string;
+  apiEndpoint: 'http://localhost:3000/query';
   apiKey?: string; // Optional for cases where API requires authentication
   modelName?: string; // Optional configuration for different models
   temperature?: number; // Optional parameter for response randomness

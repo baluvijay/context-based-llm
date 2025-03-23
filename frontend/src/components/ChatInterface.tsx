@@ -3,15 +3,12 @@ import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useChat } from '@/context/ChatContext';
 import MessageBubble from './MessageBubble';
-import ConfigPanel from './ConfigPanel';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { 
   Send, 
   Trash2, 
   ChevronDown, 
-  ChevronUp, 
-  Menu 
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/components/ui/use-toast';
@@ -89,8 +86,7 @@ const ChatInterface: React.FC = () => {
         className="flex items-center justify-between py-4 px-6 border-b glassmorphism"
       >
         <div className="flex items-center">
-          <Menu className="mr-2 h-5 w-5" />
-          <h1 className="text-xl font-semibold">AI Assistant</h1>
+          <h1 className="text-xl font-semibold">Personal Assistant </h1>
         </div>
         <div className="flex items-center gap-2">
           <Button
@@ -101,9 +97,7 @@ const ChatInterface: React.FC = () => {
           >
             <Trash2 className="h-5 w-5" />
             <span className="sr-only">Clear chat</span>
-          </Button>
-          
-          <ConfigPanel />
+          </Button>        
         </div>
       </motion.div>
 

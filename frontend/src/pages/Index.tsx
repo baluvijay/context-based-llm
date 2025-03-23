@@ -30,9 +30,17 @@ const Index: React.FC = () => {
           <ChatInterface />
         </ChatProvider>
       </div>
-      <footer className="py-4 px-6 text-center text-sm text-muted-foreground">
-        <p>© {new Date().getFullYear()} AI Chat Interface</p>
-      </footer>
+      <footer className="py-4 px-6 text-left text-sm text-muted-foreground max-w-[50%] ml-6">
+  <p>
+    <a href="https://github.com/baluvijay/context-based-llm/tree/main" 
+       target="_blank"             
+       rel="noopener noreferrer"
+       className="flex items-center gap-2 mt-6 py-3 px-5 bg-gradient-to-r from-primary/90 to-primary/70 text-white rounded-full shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-300">
+      Checkout the GitHub project and leave a star ⭐
+    </a>
+  </p>
+</footer>
+
     </motion.div>
   );
 };

@@ -5,7 +5,7 @@ import { sendMessageToAPI, createMessage } from '@/lib/chatService';
 import { toast } from '@/components/ui/use-toast';
 
 const defaultConfig: ChatConfig = {
-  apiEndpoint: 'https://api.example.com/chat',
+  apiEndpoint: 'http://localhost:3000/query',
 };
 
 const ChatContext = createContext<ChatContextType | undefined>(undefined);
