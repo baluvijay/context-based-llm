@@ -1,0 +1,162 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 210 20% 10%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 210 20% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 210 20% 10%;
+
+    --primary: 210 100% 60%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 210 30% 95%;
+    --secondary-foreground: 210 40% 30%;
+
+    --muted: 210 20% 95%;
+    --muted-foreground: 210 30% 40%;
+
+    --accent: 210 60% 95%;
+    --accent-foreground: 210 60% 20%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 210 20% 90%;
+    --input: 210 20% 90%;
+    --ring: 210 100% 60%;
+
+    --chat-light: 210 20% 98%;
+    --chat-dark: 210 40% 25%;
+    --chat-accent: 210 100% 60%;
+    --chat-muted: 210 30% 90%;
+
+    --radius: 0.8rem;
+  }
+
+  .dark {
+    --background: 210 30% 10%;
+    --foreground: 0 0% 95%;
+
+    --card: 210 30% 15%;
+    --card-foreground: 0 0% 95%;
+
+    --popover: 210 30% 15%;
+    --popover-foreground: 0 0% 95%;
+
+    --primary: 210 100% 60%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 210 20% 20%;
+    --secondary-foreground: 0 0% 95%;
+
+    --muted: 210 20% 20%;
+    --muted-foreground: 210 20% 70%;
+
+    --accent: 210 20% 25%;
+    --accent-foreground: 0 0% 95%;
+
+    --destructive: 0 62.8% 50.6%;
+    --destructive-foreground: 0 0% 95%;
+
+    --border: 210 20% 25%;
+    --input: 210 20% 25%;
+    --ring: 210 100% 60%;
+
+    --chat-light: 210 20% 20%;
+    --chat-dark: 210 20% 98%;
+    --chat-accent: 210 100% 60%;
+    --chat-muted: 210 20% 30%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  @keyframes shine {
+    to {
+      background-position: 200% center;
+    }
+  }
+
+  .text-gradient {
+    background: linear-gradient(
+      90deg,
+      hsl(var(--primary)) 0%,
+      hsl(var(--chat-accent)) 50%,
+      hsl(var(--primary)) 100%
+    );
+    background-size: 200% auto;
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shine 5s linear infinite;
+  }
+
+  .glassmorphism {
+    @apply bg-opacity-70 backdrop-blur-lg backdrop-filter;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+  }
+
+  .chat-bubble-user {
+    @apply bg-primary text-primary-foreground rounded-2xl rounded-br-sm px-4 py-2;
+  }
+
+  .chat-bubble-bot {
+    @apply bg-secondary text-secondary-foreground rounded-2xl rounded-bl-sm px-4 py-2;
+  }
+
+  .typing-indicator {
+    display: flex;
+    align-items: center;
+  }
+
+  .typing-indicator span {
+    height: 8px;
+    width: 8px;
+    margin: 0 1px;
+    background-color: hsl(var(--muted-foreground));
+    border-radius: 50%;
+    opacity: 0.4;
+    display: inline-block;
+    animation: typing 1.5s infinite ease-in-out;
+  }
+
+  .typing-indicator span:nth-child(1) {
+    animation-delay: 0s;
+  }
+
+  .typing-indicator span:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+
+  .typing-indicator span:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+
+  @keyframes typing {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-5px);
+    }
+  }
+}
