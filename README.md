@@ -54,6 +54,9 @@ Execute the project by running the command
 ./startProject.sh
 ```
 You can see the logs in the terminal or in the files created ,called backend.log & frontend.log. If you face any errors you can use these to debug or please raise as an issue.
+PS: if you face an error like readable stream is not defined. kindly run the command 
+```nvm use 20.10.0``` and then run ./startProject.sh again
+
 
 
 ## **Usage** 🛠️  
